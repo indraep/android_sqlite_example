@@ -18,11 +18,13 @@ public class HomeActivity extends Activity {
 	DatabaseHelper db;
 	
 	EditText name;
+	EditText age;
 	Button saveButton;
 	Button seePeopleButton;
 	
 	private void init() {
 		name = (EditText)findViewById(R.id.name);
+		age = (EditText)findViewById(R.id.age);
 		saveButton = (Button)findViewById(R.id.save_button);
 		seePeopleButton = (Button)findViewById(R.id.see_people_button);
 		
@@ -37,15 +39,16 @@ public class HomeActivity extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			String nameStr = name.getText().toString();
+			String ageStr = age.getText().toString();
 			try {
-				if (nameStr.length() == 0)
+				if (nameStr.length() == 0 || ageStr.length() == 0)
 					throw new Exception();
 				
-				Person person = new Person(nameStr);
+				Person person = new Person(nameStr, Integer.parseInt(ageStr));
 				db.createPerson(person);
 			}
 			catch(Exception e) {
-				
+				Toast.makeText(getApplicationContext(), "Name and age must be filled.", Toast.LENGTH_LONG).show();
 			}
 		}
 	};

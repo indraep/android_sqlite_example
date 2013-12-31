@@ -23,6 +23,17 @@
 	        android:hint="Enter the name to be saved."
 	        android:id="@+id/name" />
 	    
+	    <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Age:" />
+	    <EditText
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:inputType="number"
+	        android:hint="Enter the age to be saved."
+	        android:id="@+id/age" />
+	    
 	    <Button
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
