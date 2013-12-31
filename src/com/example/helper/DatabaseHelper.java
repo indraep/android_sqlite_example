@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String LOG = DatabaseHelper.class.getName();
  
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "sqlite_examplev2";
@@ -52,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 		Log.e(LOG, "onUpgrade method is executed");
+		db.execSQL("ALTER TABLE PERSON ADD COLUMN age int");
 	}
 	
 	/**
@@ -62,6 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
         ContentValues values = new ContentValues();
         values.put("name", person.getName());
+        values.put("age", person.getAge());
  
         // insert row
         long person_id = db.insert("PERSON", null, values);
@@ -86,9 +88,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             c.moveToFirst();
  
         Person person = new Person();
-        person.setId(c.getInt(c.getColumnIndex("id")));
-        person.setName((c.getString(c.getColumnIndex("name"))));
- 
+        try {
+	        person.setId(c.getInt(c.getColumnIndex("id")));
+	        person.setName((c.getString(c.getColumnIndex("name"))));
+	        person.setAge(Integer.parseInt(c.getString(c.getColumnIndex("age"))));
+        }
+        catch(Exception e) {}
+        
         return person;
     }
     
@@ -107,12 +113,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                Person person = new Person();
-                person.setId(c.getInt((c.getColumnIndex("id"))));
-                person.setName((c.getString(c.getColumnIndex("name"))));
-                
-                // adding to person list
-                people.add(person);
+            	Person person = new Person();
+            	
+            	try {
+	                person.setId(c.getInt((c.getColumnIndex("id"))));
+	                person.setName((c.getString(c.getColumnIndex("name"))));
+	                person.setAge(Integer.parseInt(c.getString(c.getColumnIndex("age"))));
+            	}
+            	catch(Exception e) {
+            		
+            	}
+            	finally {
+            		// adding to person list
+            		people.add(person);
+            	}
             } while (c.moveToNext());
         }
  

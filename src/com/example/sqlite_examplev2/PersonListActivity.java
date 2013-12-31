@@ -25,11 +25,7 @@ public class PersonListActivity extends ListActivity {
 		db = DatabaseHelper.getInstance(getApplicationContext());
 		
 		List<Person> people = db.getAllPeople();
-		Person[] values = new Person[people.size()];
-		int id = 0;
-		for(Person p: people) {
-			values[id++] = p;
-		}
+		Person[] values = people.toArray(new Person[people.size()]);
 		
 		ArrayAdapter<Person> adapter = new ArrayAdapter<Person>(this,
 				android.R.layout.simple_list_item_1, values);
