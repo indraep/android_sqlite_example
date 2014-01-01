@@ -26,16 +26,24 @@ public class CustomArrayAdapter extends ArrayAdapter<Person> {
 	}
 
 	public View getView(int pos, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
-		
-		// set the view with the object's data
-		TextView textView = (TextView) rowView.findViewById(R.id.secondLine);
-		ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-		
+		View rowView = convertView;
+
+		TextView textView;
+		ImageView imageView;
+
+		if (rowView == null) {
+			LayoutInflater inflater = context.getLayoutInflater();
+			rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+		}
+
+		// get provided views
+		textView = (TextView) rowView.findViewById(R.id.secondLine);
+		imageView = (ImageView) rowView.findViewById(R.id.icon);
+
+		// set the views with object's data
 		textView.setText(people.get(pos).toString());
 		imageView.setImageResource(R.drawable.ic_launcher);
-		
+
 		return rowView;
 	}
 }
