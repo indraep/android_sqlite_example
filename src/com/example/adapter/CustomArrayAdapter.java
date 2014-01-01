@@ -28,10 +28,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Person> {
 	public View getView(int pos, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+		
+		// set the view with the object's data
 		TextView textView = (TextView) rowView.findViewById(R.id.secondLine);
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-		textView.setText(people.get(pos).toString());
 		
+		textView.setText(people.get(pos).toString());
 		imageView.setImageResource(R.drawable.ic_launcher);
 		
 		return rowView;

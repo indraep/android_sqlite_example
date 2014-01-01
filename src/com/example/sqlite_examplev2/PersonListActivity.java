@@ -22,19 +22,26 @@ public class PersonListActivity extends Activity {
 	DatabaseHelper db;
 	ListView listview;
 	
+	private void init() {
+		db = DatabaseHelper.getInstance(getApplicationContext());
+		listview = (ListView)findViewById(R.id.listview);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_person_list);
 
-		db = DatabaseHelper.getInstance(getApplicationContext());
-		listview = (ListView)findViewById(R.id.listview);
+		init();
 		
+		// get all people from database
 		List<Person> people = db.getAllPeople();
 		
+		// set custom array adapter
 		CustomArrayAdapter adapter = new CustomArrayAdapter(this, people);
 		listview.setAdapter(adapter);
 		
+		// set on item click listener
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
