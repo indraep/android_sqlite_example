@@ -1,5 +1,6 @@
 package com.example.helper;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +96,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         catch(Exception e) {}
         
+        c.close();
+        
         return person;
     }
     
@@ -130,6 +133,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
  
+        c.close();
+        
         return people;
+    }
+    
+    /**
+     * Deleting a person
+     */
+    public void deletePerson(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
+ 
+        // now delete the person
+        db.delete("PERSON", "id = ?", new String[] { String.valueOf(person.getId()) });
     }
 }
