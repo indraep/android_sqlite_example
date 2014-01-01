@@ -4,15 +4,14 @@ package com.example.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.model.Person;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.example.model.Person;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 	private static DatabaseHelper mInstance = null;
@@ -146,5 +145,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
         // now delete the person
         db.delete("PERSON", "id = ?", new String[] { String.valueOf(person.getId()) });
+    }
+    
+    /**
+     * Updating a person
+     */
+    public int updateToDo(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
+ 
+        ContentValues values = new ContentValues();
+        values.put("name", person.getName());
+        values.put("age", person.getAge());
+ 
+        // updating row
+        return db.update("PERSON", values, "id = ?",
+                new String[] { String.valueOf(person.getId()) });
     }
 }
